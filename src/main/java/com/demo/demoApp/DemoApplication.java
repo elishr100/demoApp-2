@@ -14,7 +14,7 @@ public class DemoApplication {
 	@GetMapping("/")
 	@ResponseStatus(value = HttpStatus.OK)
     public String index() {
-		System.out.println("running demoApp application 2...");
+		System.out.println("running demoApp application 2 ...");
         return "Hello from Demo application 2";
     }
 
