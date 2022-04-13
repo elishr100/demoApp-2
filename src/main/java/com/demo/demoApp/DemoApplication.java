@@ -28,6 +28,20 @@ public class DemoApplication {
         return message;
     }
 
+	@GetMapping("/")
+	@ResponseStatus(value = HttpStatus.OK)
+    public String index2() {
+		String message = "Hello From APP2 !!! ";
+		try {
+			InetAddress ip = InetAddress.getLocalHost();
+			message += " From host: " + ip;
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+
+        return message;
+    }
+
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}
