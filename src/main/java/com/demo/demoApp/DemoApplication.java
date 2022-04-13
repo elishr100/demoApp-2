@@ -1,5 +1,8 @@
 package com.demo.demoApp;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
@@ -14,8 +17,15 @@ public class DemoApplication {
 	@GetMapping("/")
 	@ResponseStatus(value = HttpStatus.OK)
     public String index() {
-		System.out.println("running demoApp application 2 ...");
-        return "Hello from Demo application 2";
+		String message = "Hello From APP2 !!! ";
+		try {
+			InetAddress ip = InetAddress.getLocalHost();
+			message += " From host: " + ip;
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+				
+        return message;
     }
 
 	public static void main(String[] args) {
