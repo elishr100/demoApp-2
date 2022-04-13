@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class DemoApplication {
 
-	@GetMapping("/")
+	@GetMapping("/app2")
 	@ResponseStatus(value = HttpStatus.OK)
     public String index() {
 		String message = "Hello From APP2 !!! ";
@@ -24,7 +24,7 @@ public class DemoApplication {
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
-			
+
         return message;
     }
 
