@@ -4,11 +4,15 @@
 name: Pipeline
 
 on:
+  workflow_dispatch:
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
 
+env:
+  SERVICE_NAME: demoApp-service-2
+  CLUSTER_NAME: eli-demoApp
 jobs:
   build:
 
@@ -69,7 +73,7 @@ jobs:
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
-        service: demoApp-service-2 
-        cluster: eli-demoApp
+        service: $SERVICE_NAME 
+        cluster: $CLUSTER_NAME
         wait-for-service-stability: true
         
