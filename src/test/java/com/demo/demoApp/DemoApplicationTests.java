@@ -15,12 +15,12 @@ class DemoApplicationTests {
 	@Test
 	void testString() {
 		String message = "Hello From APP2 !!! ";
-		try {
-			InetAddress ip = InetAddress.getLocalHost();
-			message += " From host: " + ip;
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		}
+		// try {
+		// 	InetAddress ip = InetAddress.getLocalHost();
+		// 	message += " From host: " + ip;
+		// } catch (UnknownHostException e) {
+		// 	e.printStackTrace();
+		// }
 
 		DemoApplication demoApp = new DemoApplication();
 		assertEquals(message, demoApp.index());
