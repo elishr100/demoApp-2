@@ -29,7 +29,7 @@ class DemoApplicationTests {
 		// }
 
 		DemoController demoApp = new DemoController(taskExecutor);
-		assertEquals(message, demoApp.handleApp2());
+		assertEquals(message, demoApp.index());
 
 	}
 
