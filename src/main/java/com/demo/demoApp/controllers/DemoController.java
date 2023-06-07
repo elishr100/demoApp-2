@@ -16,20 +16,20 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 @RestController
 public class DemoController {
-    private final Semaphore app2Semaphore;
+    private final Semaphore appSemaphore;
     private final Semaphore rootSemaphore;
     private final ThreadPoolTaskExecutor taskExecutor;
 
     @Autowired
     public DemoController(ThreadPoolTaskExecutor taskExecutor) {
-        this.app2Semaphore = new Semaphore(2); // Allow two concurrent requests for /app2
-        this.rootSemaphore = new Semaphore(2); // Allow two concurrent requests for /
+        this.appSemaphore = new Semaphore(1); // Allow 1 concurrent requests for /app2
+        this.rootSemaphore = new Semaphore(1); // Allow 1 concurrent requests for /
         this.taskExecutor = taskExecutor;
     }
 
     @GetMapping("/app3")
     public String index() {
-        if (app2Semaphore.tryAcquire()) {
+        if (appSemaphore.tryAcquire()) {
             taskExecutor.execute(() -> {
                 try {
                     // Process the request for /app2
@@ -37,7 +37,7 @@ public class DemoController {
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 } finally {
-                    app2Semaphore.release();
+                    appSemaphore.release();
                 }
             });
 
