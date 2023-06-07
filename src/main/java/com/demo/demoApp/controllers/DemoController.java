@@ -25,7 +25,7 @@ public class DemoController {
     }
 
     @GetMapping("/app2")
-    public ResponseEntity<String> handleApp2() {
+    public String handleApp2() {
         if (app2Semaphore.tryAcquire()) {
             taskExecutor.execute(() -> {
                 try {
@@ -38,15 +38,14 @@ public class DemoController {
                 }
             });
 
-            return ResponseEntity.ok("Hello From APP2 !!!");
+            return "Hello From APP2 !!!";
         } else {
-            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
-                    .body("Endpoint /app2 is busy. Please try again later.");
+            return "503 Service Unavailable - Endpoint /app2 is busy. Please try again later.";
         }
     }
 
     @GetMapping("/")
-    public ResponseEntity<String> handleRoot() {
+    public String handleRoot() {
         if (rootSemaphore.tryAcquire()) {
             taskExecutor.execute(() -> {
                 try {
@@ -59,7 +58,7 @@ public class DemoController {
                 }
             });
 
-            String message = "Hello From APP2 !!! ";
+            String message = "Hello From APP2 !!!";
             try {
                 InetAddress ip = InetAddress.getLocalHost();
                 message += " From host: " + ip;
@@ -67,10 +66,9 @@ public class DemoController {
                 e.printStackTrace();
             }
 
-            return ResponseEntity.ok(message);
+            return message;
         } else {
-            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
-                    .body("Endpoint / is busy. Please try again later.");
+            return "503 Service Unavailable - Endpoint /app2 is busy. Please try again later.";
         }
     }
 }
