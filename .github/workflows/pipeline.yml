@@ -11,7 +11,7 @@ on:
     branches: [ master ]
 
 env:
-  SERVICE_NAME: app2
+  SERVICE_NAME: app5
   CLUSTER_NAME: eli-demoApp
 jobs:
   build:
