@@ -28,7 +28,7 @@ public class DemoController {
     }
 
     @GetMapping("/app2")
-    public String handleApp2() {
+    public String index() {
         if (app2Semaphore.tryAcquire()) {
             taskExecutor.execute(() -> {
                 try {
@@ -50,7 +50,7 @@ public class DemoController {
     }
 
     @GetMapping("/")
-    public String handleRoot() {
+    public String index2() {
         if (rootSemaphore.tryAcquire()) {
             taskExecutor.execute(() -> {
                 try {
