@@ -27,7 +27,7 @@ public class DemoController {
         this.taskExecutor = taskExecutor;
     }
 
-    @GetMapping("/app2")
+    @GetMapping("/app5")
     public String index() {
         if (app2Semaphore.tryAcquire()) {
             taskExecutor.execute(() -> {
