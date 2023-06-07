@@ -1,15 +1,18 @@
 package com.demo.demoApp.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.concurrent.Semaphore;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
 
 @RestController
 public class DemoController {
@@ -40,6 +43,8 @@ public class DemoController {
 
             return "Hello From APP2 !!!";
         } else {
+            HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
+            response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
             return "503 Service Unavailable - Endpoint /app2 is busy. Please try again later.";
         }
     }
@@ -68,7 +73,9 @@ public class DemoController {
 
             return message;
         } else {
-            return "503 Service Unavailable - Endpoint /app2 is busy. Please try again later.";
+            HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
+            response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+            return "503 Service Unavailable - Endpoint / is busy. Please try again later.";
         }
     }
 }
