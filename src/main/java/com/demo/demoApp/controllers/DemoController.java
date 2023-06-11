@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,39 +30,32 @@ public class DemoController {
     }
 
     @GetMapping("/app3")
-    public String index(HttpServletResponse response) {
+    public String index() {
         if (appSemaphore.tryAcquire()) {
             taskExecutor.execute(() -> {
                 try {
-                    // Process the request for /app2
+                    // Process the request for /
                     Thread.sleep(1000); // Simulating processing time
-                    sendResponse(response, "Hello From APP2 !!!", HttpServletResponse.SC_OK);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 } finally {
                     appSemaphore.release();
                 }
             });
-            return "Hello From APP2 !!!";
+
+            String message = "Hello From APP2 !!!";
+            try {
+                InetAddress ip = InetAddress.getLocalHost();
+                message += " From host: " + ip;
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
+
+            return message;
         } else {
-            // HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
-            // response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
-            // return "503 Service Unavailable - Endpoint /app2 is busy. Please try again later.";
-            sendResponse(response, "503 Service Unavailable - Endpoint /app2 is busy. Please try again later.", HttpServletResponse.SC_SERVICE_UNAVAILABLE);
-            return "503 Service Unavailable - Endpoint /app2 is busy. Please try again later.";
-    
-        }
-
-    }
-
-    private void sendResponse(HttpServletResponse response, String message, int status) {
-        try {
-            response.setStatus(status);
-            response.getWriter().write(message);
-            response.getWriter().flush();
-        } catch (IOException e) {
-            // Handle IOException appropriately
-            e.printStackTrace();
+            HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
+            response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+            return "503 Service Unavailable - Endpoint / is busy. Please try again later.";
         }
     }
 

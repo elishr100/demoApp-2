@@ -2,6 +2,9 @@ package com.demo.demoApp;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -19,17 +22,17 @@ class DemoApplicationTests {
 	
 	@Test
 	void testString() {
-		//String message = "Hello From APP2 !!!";
+		String message = "Hello From APP2 !!!";
 
-		// try {
-		// 	InetAddress ip = InetAddress.getLocalHost();
-		// 	message += " From host: " + ip;
-		// } catch (UnknownHostException e) {
-		// 	e.printStackTrace();
-		// }
+		try {
+			InetAddress ip = InetAddress.getLocalHost();
+			message += " From host: " + ip;
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
 
-		//DemoController demoApp = new DemoController(taskExecutor);
-		//assertEquals(message, demoApp.index());
+		DemoController demoApp = new DemoController(taskExecutor);
+		assertEquals(message, demoApp.index());
 
 	}
 
