@@ -24,8 +24,8 @@ public class DemoController {
 
     @Autowired
     public DemoController(ThreadPoolTaskExecutor taskExecutor) {
-        this.appSemaphore = new Semaphore(1); // Allow 1 concurrent requests for /app2
-        this.rootSemaphore = new Semaphore(1); // Allow 1 concurrent requests for /
+        this.appSemaphore = new Semaphore(2); // Allow 1 concurrent requests for /app2
+        this.rootSemaphore = new Semaphore(2); // Allow 1 concurrent requests for /
         this.taskExecutor = taskExecutor;
     }
 
