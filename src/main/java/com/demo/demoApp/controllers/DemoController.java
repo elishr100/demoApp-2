@@ -35,7 +35,7 @@ public class DemoController {
             taskExecutor.execute(() -> {
                 try {
                     // Process the request for /
-                    Thread.sleep(1000); // Simulating processing time
+                    Thread.sleep(generateRandomNumber()); // Simulating processing time
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 } finally {
@@ -56,6 +56,18 @@ public class DemoController {
             HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
             response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
             return "503 Service Unavailable - Endpoint / is busy. Please try again later.";
+        }
+    }
+
+    public int generateRandomNumber() {
+        double randomNumber = Math.random(); // Generate a random double between 0 and 1
+    
+        if (randomNumber < 0.8) {
+            // Generate a random number between 500 and 1000 (exclusive)
+            return (int) (500 + Math.random() * 500);
+        } else {
+            // Generate a random number between 1000 and 1500 (inclusive)
+            return (int) (1000 + Math.random() * 501);
         }
     }
 
